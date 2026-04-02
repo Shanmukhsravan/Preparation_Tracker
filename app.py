@@ -1,11 +1,10 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from db import get_db_connection, init_db
-import datetime
-from datetime import date, timedelta
 import os
+from datetime import date
 
-app = Flask(__name__, static_folder='.', static_url_path='')
+app = Flask(__name__, static_folder=os.getcwd(), static_url_path='')
 CORS(app)
 
 # Initialize database on startup
@@ -108,8 +107,6 @@ def tasks_api():
         conn.commit()
         return success_response("Task added")
     else:
-        # Fetch ALL Pending tasks (Automated Carried Forward)
-        # PLUS all Completed tasks for TODAY
         target_today = date.today().isoformat()
         cursor.execute("""
             SELECT * FROM tasks 
@@ -195,7 +192,7 @@ def timetable_api():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     if request.method == 'PUT':
-        data = request.json # Expects { time_slot, day_of_week, subject, topic }
+        data = request.json
         cursor.execute("SELECT id FROM timetable WHERE time_slot = %s AND day_of_week = %s", (data['time_slot'], data['day_of_week']))
         existing = cursor.fetchone()
         if existing:
@@ -211,4 +208,5 @@ def timetable_api():
         return success_response("Timetable fetched", data)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)

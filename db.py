@@ -6,10 +6,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DB_CONFIG = {
-    'user': 'root',
-    'password': '123456789',
-    'host': '127.0.0.1',
-    'database': 'preparationTracker',
+    'user': os.getenv('DB_USER', 'root'),
+    'password': os.getenv('DB_PASSWORD', '123456789'),
+    'host': os.getenv('DB_HOST', '127.0.0.1'),
+    'database': os.getenv('DB_NAME', 'preparationTracker'),
+    'port': int(os.getenv('DB_PORT', 3306)),
 }
 
 def get_db_connection(create_db=False):
