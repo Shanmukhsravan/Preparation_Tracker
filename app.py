@@ -108,10 +108,17 @@ def tasks_api():
         conn.commit()
         return success_response("Task added")
     else:
-        target_date = request.args.get('date', date.today().isoformat())
-        cursor.execute("SELECT * FROM tasks WHERE date = %s ORDER BY priority DESC", (target_date,))
+        # Fetch ALL Pending tasks (Automated Carried Forward)
+        # PLUS all Completed tasks for TODAY
+        target_today = date.today().isoformat()
+        cursor.execute("""
+            SELECT * FROM tasks 
+            WHERE status = 'Pending' 
+            OR (status = 'Completed' AND date = %s)
+            ORDER BY priority DESC, date ASC
+        """, (target_today,))
         data = cursor.fetchall()
-        return success_response("Tasks fetched", data)
+        return success_response("Tasks synchronized", data)
 
 @app.route('/api/tasks/<int:task_id>', methods=['PUT', 'DELETE'])
 def manage_task(task_id):

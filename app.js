@@ -143,27 +143,26 @@ async function syncSessionTimer() {
 function renderDashboard() {
     const today = new Date().toISOString().split('T')[0];
     
-    // 1. Hours
-    const totalToday = studyLogs.filter(l => l.date && l.date.includes(today)).reduce((a, b) => a + parseFloat(b.hours), 0);
+    // 1. Study Hours Metric
+    const totalTodayHours = studyLogs.filter(l => l.date && l.date.includes(today)).reduce((a, b) => a + parseFloat(b.hours), 0);
     const studyDisplay = document.getElementById('today-study-total');
-    if(studyDisplay) studyDisplay.innerText = totalToday.toFixed(1);
+    if (studyDisplay) studyDisplay.innerText = totalTodayHours.toFixed(1);
     
     const studyBar = document.getElementById('study-progress-bar');
-    if(studyBar) {
-        const perc = Math.min((totalToday / STUDY_GOAL) * 100, 100);
+    if (studyBar) {
+        const perc = Math.min((totalTodayHours / STUDY_GOAL) * 100, 100);
         studyBar.style.width = `${perc}%`;
     }
 
-    // 2. Task Counts
-    const todayTasks = tasks.filter(t => t.date && t.date.includes(today));
-    const totalT = document.getElementById('today-tasks-total');
-    if(totalT) totalT.innerText = todayTasks.length;
+    // 2. Task Metrics (Now pulling from all synchronised tasks)
+    const totalTasksEl = document.getElementById('today-tasks-total');
+    if (totalTasksEl) totalTasksEl.innerText = tasks.length;
 
-    const compT = document.getElementById('today-tasks-completed');
-    if(compT) compT.innerText = todayTasks.filter(t => t.status === 'Completed').length;
+    const completedTasksEl = document.getElementById('today-tasks-completed');
+    if (completedTasksEl) completedTasksEl.innerText = tasks.filter(t => t.status === 'Completed').length;
 
-    const pendT = document.getElementById('today-tasks-pending');
-    if(pendT) pendT.innerText = todayTasks.filter(t => t.status === 'Pending').length;
+    const pendingTasksEl = document.getElementById('today-tasks-pending');
+    if (pendingTasksEl) pendingTasksEl.innerText = tasks.filter(t => t.status === 'Pending').length;
 }
 
 // --- Notification & Alerts ---
