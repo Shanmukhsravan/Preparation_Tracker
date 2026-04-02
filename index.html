@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBPS SO Smart Preparation Tracker | Shanmukh</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <div id="hamburger" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
+        <div class="mobile-logo">IBPS SO TRACKER</div>
+        <div style="display: flex; gap: 10px;">
+             <div class="top-action-btn" onclick="toggleTheme()"><i class="fas fa-moon theme-toggle-icon"></i><i class="fas fa-sun theme-toggle-icon"></i></div>
+             <div class="top-action-btn" onclick="toggleNotifPanel()"><i class="fas fa-bell"></i><span class="notif-badge" id="notif-count">0</span></div>
+        </div>
+    </div>
+
+    <!-- Notification Panel -->
+    <aside id="notif-panel" class="glass notif-sidebar">
+        <div class="notif-header">
+            <h3>Notifications</h3>
+            <i class="fas fa-times" onclick="toggleNotifPanel()" style="cursor:pointer;"></i>
+        </div>
+        <div id="notif-list" class="notif-list">
+            <p style="color: var(--text-muted); padding: 1rem; text-align: center;">No new alerts.</p>
+        </div>
+    </aside>
+
+    <!-- Entry Screen: Deep Space -->
+    <div id="entry-screen">
+        <div class="stardust"></div>
+        <div style="text-align: center; z-index: 10;">
+            <p style="letter-spacing: 3px; font-size: 0.8rem; opacity: 0.7; margin-bottom: 1rem;">PREPARATION TRACKER</p>
+            <h1 id="user-name">Shanmukh</h1>
+            <p id="current-datetime" style="font-size: 1.1rem; margin-top: 1.5rem; opacity: 0.8; font-family: 'Outfit';"></p>
+            <div id="quote-container" style="margin-top: 3rem; max-width: 400px;">
+                <p id="quote" style="font-style: italic; opacity: 0.6; font-size: 0.9rem;">"Building your legacy, one hour at a time."</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div class="app-container" style="display: none;">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="sidebar">
+            <div class="logo" style="display: flex; align-items: center; gap: 12px; margin-bottom: 3rem; padding-left: 10px;">
+                <div style="background: linear-gradient(135deg, var(--primary), var(--accent)); padding: 10px; border-radius: 12px; box-shadow: 0 4px 15px var(--primary-glow);">
+                    <i class="fas fa-rocket" style="color: white; font-size: 1.1rem;"></i>
+                </div>
+                <span class="nav-text" style="font-weight: 800; font-family: 'Outfit'; letter-spacing: -0.5px;">FOCUS 2.0</span>
+            </div>
+
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="#dashboard" class="nav-link active" onclick="showSection('dashboard')">
+                        <i class="fas fa-home"></i><span class="nav-text">Insights</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#today-tasks" class="nav-link" onclick="showSection('today-tasks')">
+                        <i class="fas fa-calendar-check"></i><span class="nav-text">Today's Tasks</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#syllabus" class="nav-link" onclick="showSection('syllabus')">
+                        <i class="fas fa-shapes"></i><span class="nav-text">Syllabus</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#subject-analysis" class="nav-link" onclick="showSection('subject-analysis')">
+                        <i class="fas fa-chart-line"></i><span class="nav-text">Analysis</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#study-tracker" class="nav-link" onclick="showSection('study-tracker')">
+                        <i class="fas fa-hourglass-half"></i><span class="nav-text">Study Logs</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#resources" class="nav-link" onclick="showSection('resources')">
+                        <i class="fas fa-bookmark"></i><span class="nav-text">Resources</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#timetable" class="nav-link" onclick="showSection('timetable')">
+                        <i class="fas fa-stream"></i><span class="nav-text">Schedule</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="user-profile" style="margin-top: auto; display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 16px;">
+                <div style="background: var(--primary); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: white;">S</div>
+                <div class="nav-text">
+                    <p style="font-weight: 700; font-size: 0.9rem;">Shanmukh</p>
+                    <div style="display: flex; gap: 8px; margin-top: 4px;">
+                        <i class="fas fa-moon" style="cursor:pointer; font-size: 0.8rem;" onclick="toggleTheme()"></i>
+                        <i class="fas fa-bell" style="cursor:pointer; font-size: 0.8rem;" onclick="toggleNotifPanel()"></i>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="content">
+            <!-- Dashboard -->
+            <section id="dashboard" class="section active">
+                <header style="margin-bottom: 2.5rem; display: flex; justify-content: space-between; align-items: flex-end;">
+                    <div>
+                        <h1 id="greeting-txt" style="font-size: 2.5rem;">Good Morning, <span style="color: var(--primary);">Shanmukh</span></h1>
+                        <p style="color: var(--text-muted); font-weight: 500;" id="header-date"></p>
+                    </div>
+                </header>
+
+                <div class="dashboard-grid">
+                    <!-- Session Timer -->
+                    <div class="glass" style="padding: 2rem; position: relative; overflow: hidden;">
+                         <div style="position: absolute; top: -10px; right: -10px; opacity: 0.05; font-size: 5rem;"><i class="fas fa-stopwatch"></i></div>
+                         <h3 style="color: var(--primary); margin-bottom: 1rem;">ACTIVE SESSION</h3>
+                         <div class="value" id="session-timer" style="font-size: 3rem; background: linear-gradient(135deg, var(--text-main), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">00:00:00</div>
+                         <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">Focus locked. Auto-syncing every 60s.</p>
+                    </div>
+
+                    <!-- Circular Today Study Hours -->
+                    <div class="glass" style="padding: 2rem; display: flex; align-items: center; gap: 1.5rem;">
+                         <div class="progress-ring-container">
+                             <svg class="progress-ring" width="100" height="100">
+                                 <circle class="progress-ring__background" stroke-width="8" r="40" cx="50" cy="50"></circle>
+                                 <circle class="progress-ring__circle" id="study-progress-ring" stroke-width="8" r="40" cx="50" cy="50" stroke-dasharray="251.32" stroke-dashoffset="251.32"></circle>
+                             </svg>
+                             <div class="progress-ring-text" id="today-study-total">0.0</div>
+                         </div>
+                         <div>
+                             <h3 style="margin: 0;">DAILY PROGRESS</h3>
+                             <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 5px;">Target: 8 Hours</p>
+                             <p id="timer-sync-status" style="font-size: 0.7rem; color: var(--success); margin-top: 5px; opacity: 0;">Synced!</p>
+                         </div>
+                    </div>
+
+                    <!-- Recent Summary -->
+                    <div class="glass" style="padding: 2rem;">
+                        <h3 style="margin-bottom: 1rem;">RECENT ACTIVITY</h3>
+                        <div id="recent-study-logs" style="font-size: 0.85rem;"></div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-top: 2rem;">
+                    <div class="glass" style="padding: 2rem; position: relative;">
+                        <div id="phase-badge" class="phase-label" style="position: absolute; top: 20px; right: 20px;">PHASE 1</div>
+                        <h2 style="font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--text-muted);">Syllabus Competition Deadline</h2>
+                        <div style="display: flex; align-items: baseline; gap: 12px;">
+                            <span style="font-size: 4rem; font-weight: 800; font-family: 'Outfit';" id="days-remaining">--</span>
+                            <span style="color: var(--text-muted); font-weight: 600;">Days remaining until review</span>
+                        </div>
+                        <div class="progress-container" style="height: 12px; border-radius: 10px; margin-top: 15px;">
+                            <div class="progress-bar" id="phase-progress" style="width: 0%; border-radius: 10px; background: linear-gradient(90deg, var(--primary), var(--accent));"></div>
+                        </div>
+                    </div>
+                    <div class="glass" style="padding: 2rem; max-height: 250px; overflow-y: auto;">
+                        <h3 style="font-size: 0.9rem; color: var(--primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-bolt"></i> RECENT ALERTS
+                        </h3>
+                        <div id="mini-notif-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- All other sections remain functional -->
+            <section id="today-tasks" class="section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h1>Task Center</h1>
+                    <button class="btn btn-primary" onclick="openTaskModal()"><i class="fas fa-plus"></i> NEW GOAL</button>
+                </div>
+                <div id="tasks-container">
+                    <div id="carried-forward-section" style="margin-bottom: 2rem;">
+                        <h3 class="section-title warning">OVERDUE / CARRIED</h3>
+                        <div id="carried-forward-list" class="task-list"></div>
+                    </div>
+                    <div id="normal-tasks-section" style="margin-bottom: 2rem;">
+                        <h3 class="section-title primary">TODAY'S PRIORITIES</h3>
+                        <div id="normal-tasks-list" class="task-list"></div>
+                    </div>
+                    <div id="completed-tasks-section">
+                        <h3 class="section-title success">DONE</h3>
+                        <div id="completed-tasks-list" class="task-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="syllabus" class="section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem;">
+                    <h1>Syllabus Mastery</h1>
+                    <!-- Simplified Modal trigger -->
+                </div>
+                <div class="glass" style="padding: 2rem;">
+                    <div id="syllabus-hierarchy" class="hierarchy-container"></div>
+                </div>
+            </section>
+            
+            <section id="subject-analysis" class="section">
+                <h1>Data Insights</h1>
+                <div id="subject-analysis-container" class="dashboard-grid" style="margin-top: 2rem;"></div>
+            </section>
+
+            <section id="resources" class="section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem;">
+                    <h1>Learning Vault</h1>
+                    <button class="btn btn-primary" onclick="openResourceModal()"><i class="fas fa-plus"></i> ADD RESOURCE</button>
+                </div>
+                <div id="resources-grid" class="dashboard-grid"></div>
+            </section>
+
+            <section id="timetable" class="section">
+                <header style="margin-bottom: 2.5rem;">
+                    <h1>Dynamic Roadmap</h1>
+                    <p style="color: var(--text-muted);">Real-time schedule monitoring active.</p>
+                </header>
+                <div class="glass" style="padding: 1.5rem; overflow-x: auto;">
+                    <table class="timetable-table" id="timetable-main">
+                        <thead><tr id="timetable-header"></tr></thead>
+                        <tbody id="timetable-body"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-overlay" onclick="closeModals()"></div>
+    
+    <div id="analysis-detail-modal" class="glass modal-content">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
+            <h2 id="modal-subject-name" style="color: var(--primary);">Subject</h2>
+            <i class="fas fa-times" onclick="closeModals()" style="cursor:pointer;"></i>
+        </div>
+        <div class="dashboard-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="glass" style="padding:1rem; text-align:center;"><h3>Done</h3><div class="value success" id="detail-completed" style="font-size:1.5rem;">0</div></div>
+            <div class="glass" style="padding:1rem; text-align:center;"><h3>Left</h3><div class="value warning" id="detail-pending" style="font-size:1.5rem;">0</div></div>
+            <div class="glass" style="padding:1rem; text-align:center;"><h3>Total</h3><div class="value" id="detail-total" style="font-size:1.5rem;">0</div></div>
+        </div>
+        <div id="detail-topic-list" style="margin-top: 2rem; max-height: 300px; overflow-y: auto;"></div>
+    </div>
+
+    <!-- Mini Modals -->
+    <div id="task-modal" class="glass modal-content" style="max-width: 400px;">
+        <h3 style="margin-bottom: 1.5rem;">New Commitment</h3>
+        <input type="text" id="task-input" class="glass-input" placeholder="What needs to be done?">
+        <select id="task-subject" class="glass-input">
+            <option value="Reasoning">Reasoning</option><option value="English">English</option>
+            <option value="Quant">Quant</option><option value="IT">IT (Mains)</option>
+        </select>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn btn-primary" onclick="saveTask()" style="flex:1;">SAVE</button>
+            <button class="btn" onclick="closeModals()" style="flex:1;">CANCEL</button>
+        </div>
+    </div>
+
+    <div id="resource-modal" class="glass modal-content" style="max-width: 400px;">
+        <h3 style="margin-bottom: 1.5rem;">Add Resource</h3>
+        <input type="text" id="res-name" class="glass-input" placeholder="Title/Topic">
+        <input type="text" id="res-link" class="glass-input" placeholder="URL (YouTube/Drive)">
+        <select id="res-sub" class="glass-input">
+            <option value="Reasoning">Reasoning</option><option value="English">English</option>
+            <option value="Quant">Quant</option><option value="IT">IT (Mains)</option>
+        </select>
+        <button class="btn btn-primary" onclick="saveResource()" style="width:100%;">ADD RESOURCE</button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
